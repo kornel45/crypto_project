@@ -71,7 +71,6 @@ def handle_client(client):
                         broadcast(bytes(msg, 'utf-8'))
 
         except ConnectionResetError:
-            print('jebło')
             del clients_public_keys[client_id]
             del clients[client]
 
