@@ -41,7 +41,7 @@ def handle_client(client):
     broadcast(bytes(msg, "utf8"))
     client_id = int(index)
     clients[client] = name
-    msg = 'Podaj x z g^x mod p. Klient wyśle na serwer g^x mod p.'
+    msg = 'Podaj x. Klient wyśle na serwer g^x mod p.'
     client.send(bytes(msg, "utf8"))
     while True:
         try:
@@ -53,7 +53,7 @@ def handle_client(client):
                 break
             else:
                 if msg.decode('utf-8').isdigit() and first:
-                    client.send(bytes('Podałeś {}'.format(int(msg)), "utf8"))
+                    client.send(bytes('Podałeś {}. Czekamy na pozostałe osoby.'.format(int(msg)), "utf8"))
                     clients_public_keys[client_id] = int(msg)
                     first = False
                     if len(clients_public_keys.keys()) == 3:
@@ -80,8 +80,9 @@ def broadcast(msg, prefix=""):
         sock.send(bytes(prefix, "utf8") + msg)
 
 
-g = 7
+g = 3
 p = 1023
+
 clients = {}
 addresses = {}
 clients_public_keys = {}
