@@ -81,7 +81,7 @@ def broadcast(msg, prefix=""):
 
 
 g = 3
-p = 1023
+p = 2003
 
 clients = {}
 addresses = {}
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     SERVER.listen(5)
     print("Waiting for connection...")
     ACCEPT_THREAD = Thread(target=accept_incoming_connections)
-    CALC_THREAD = Thread(target=gen_answer)
+    # CALC_THREAD = Thread(target=gen_answer)
     ACCEPT_THREAD.start()
     ACCEPT_THREAD.join()
     SERVER.close()
