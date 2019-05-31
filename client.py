@@ -1,5 +1,6 @@
 import random
 import re
+import ssl
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 
@@ -7,18 +8,20 @@ from common import HOST, PORT, BUFF_SIZE, modinv
 
 
 def receive():
-    global i, g, p, public_keys, is_veto, last_answer
+    global i, g, p, public_keys, is_veto, last_answer, send_key
     while True:
         try:
             msg = client_socket.recv(BUFF_SIZE).decode("utf8")
             if 'Twoje id wynosi' in msg:
                 tmp = msg[::]
                 i = int(re.sub(r'\D', '', tmp))
-            elif 'Ustalono g, p' in msg:
+            elif 'Zaproponowano g, p' in msg:
                 g, p = [int(x) for x in re.findall(r'\d+', msg)]
             elif 'Każdy z was wysłał pub_key' in msg:
                 public_keys = eval(msg.split('\n')[1])
-            if '?' in msg:
+            elif 'Wcisnij enter aby wyslac klucz publiczny' in msg:
+                send_key = True
+            elif 'Pytanie' in msg:
                 last_answer = True
             print(msg)
         except OSError:
@@ -26,19 +29,26 @@ def receive():
 
 
 def send():
-    global i, g, p, x_i, last_answer, is_veto
+    global i, g, p, x_i, last_answer, is_veto, send_key
     while True:
-        msg = input()
-        if last_answer:
+
+        if not send_key:
+            msg = input()
+
+        if last_answer and not send_key:
             is_veto = True if msg == 't' else False
             msg = str(gen_answer(is_veto))
-        elif msg.isdigit():
-            x_i = int(msg)
-            msg = str(g ** int(msg) % p)
-        client_socket.send(bytes(msg, "utf8"))
-        if msg == r"\q":
+            client_socket.send(bytes(msg, "utf8"))
+        elif send_key:
+            x_i = random.randint(0, 100)
+            msg = str(g ** x_i % p)
+            print('Wysyłam klucz publiczny: {}'.format(msg))
+            send_key = False
+            client_socket.send(bytes(msg, "utf8"))
+        if not send_key and msg == r"\q":
             client_socket.close()
             break
+        client_socket.send(bytes(msg, "utf8"))
 
 
 def gen_answer(is_veto):
@@ -68,11 +78,20 @@ x_i = None
 public_keys = {}
 is_veto = None
 last_answer = None
+send_key = False
 
 if __name__ == '__main__':
     ADDR = (HOST, PORT)
+    server_sni_hostname = 'veto.com'
+    server_cert = 'server.crt'
+    client_cert = 'client.crt'
+    client_key = 'client.key'
 
-    client_socket = socket(AF_INET, SOCK_STREAM)
+    context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH, cafile=server_cert)
+    context.load_cert_chain(certfile=client_cert, keyfile=client_key)
+
+    s = socket(AF_INET, SOCK_STREAM)
+    client_socket = context.wrap_socket(s, server_side=False, server_hostname=server_sni_hostname)
     client_socket.connect(ADDR)
 
     receive_thread = Thread(target=receive)
