@@ -27,3 +27,4 @@ def is_veto(answers, p):
 HOST = 'localhost'
 PORT = 465
 BUFF_SIZE = 1024
+PYTANIE = 'Czy papież łowi łyby?'

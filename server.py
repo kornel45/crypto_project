@@ -5,7 +5,7 @@ import time
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 
-from common import HOST, PORT, BUFF_SIZE, is_veto
+from common import HOST, PORT, BUFF_SIZE, PYTANIE, is_veto
 
 index = 0
 
@@ -90,7 +90,7 @@ def handle_client(client):
                         time.sleep(0.01)
                         broadcast(bytes('Otrzymacie zaraz pytanie, proszę odpowiedzieć na nie.', 'utf-8'))
                         time.sleep(0.01)
-                        broadcast(bytes('Pytanie: Czy papież łowi łyby? [t/n]', 'utf-8'))
+                        broadcast(bytes('Pytanie: {} [t/n]'.format(PYTANIE), 'utf-8'))
                         time.sleep(0.01)
                 elif msg.decode('utf-8').isdigit():
                     client_answers[client_id] = int(msg.decode('utf-8'))
@@ -101,13 +101,6 @@ def handle_client(client):
                         msg = 'Wasza odpowiedź to: {}'.format(str(result))
                         broadcast(bytes(msg, 'utf-8'))
                         should_print = False
-
-
-
-
-                # elif msg.decode('utf-8').isdigit():
-
-
         except ConnectionResetError:
             del clients_public_keys[client_id]
             del clients[client]
