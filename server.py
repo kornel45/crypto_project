@@ -40,7 +40,7 @@ def get_name(client):
 def get_g_p(client, client_id):
     global response_p_g, g, p, agreement, przeszedlem, ktory_wybiera
     if client_id == ktory_wybiera:
-        msg = 'Zaproponuj proszę g, p'
+        msg = 'Zaproponuj proszę g, p w postacie g,p [liczba przcinek liczba]'
         client.send(bytes(msg, 'utf-8'))
         response = client.recv(BUFF_SIZE).decode('utf-8')
         response_p_g[client_id] = response

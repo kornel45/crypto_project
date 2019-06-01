@@ -38,17 +38,26 @@ def send():
         if last_answer and not send_key:
             is_veto = True if msg == 't' else False
             msg = str(gen_answer(is_veto))
-            client_socket.send(bytes(msg, "utf8"))
+            try:
+                client_socket.send(bytes(msg, "utf8"))
+            except (ConnectionResetError, ssl.SSLEOFError):
+                pass
         elif send_key:
             x_i = random.randint(0, 100)
             msg = str(g ** x_i % p)
             print('Wysyłam klucz publiczny: {}'.format(msg))
             send_key = False
-            client_socket.send(bytes(msg, "utf8"))
+            try:
+                client_socket.send(bytes(msg, "utf8"))
+            except (ConnectionResetError, ssl.SSLEOFError):
+                pass
         if not send_key and msg == r"\q":
             client_socket.close()
             break
-        client_socket.send(bytes(msg, "utf8"))
+        try:
+            client_socket.send(bytes(msg, "utf8"))
+        except (ConnectionResetError, ssl.SSLEOFError):
+            pass
 
 
 def gen_answer(is_veto):
