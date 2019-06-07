@@ -15,13 +15,39 @@ samego HOSTa. Dodatkowo certyfikaty i klucze powinny być w tym samym folderze, 
 
 Certyfikaty zostały wrzucone na gita i będą aktualne przez 360 dni. Aby wygenerować nowe certyfikaty należy mieć 
 zainstalowanego openssl-a oraz wykonać z CMD następujące komendy:
-openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt
+
+`openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt`
+
 aby wygenerować certyfikat dla serwera
 oraz 
-openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout client.key -out client.crt
+
+`openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout client.key -out client.crt`
+
 dla klienta.
 
 Pamiętać też trzeba, że przy generowaniu klucza serwerowego należy w CommonName wpisać veto.com
 
 W przypadku problemów związanych z openssl możliwa będzie potrzeba ustawienia ścieżki środowiskowej 
-set OPENSSL_CONF=sciezka/do/openssl/libs/openssl-0.9.8k/openssl.cnf
+
+`set OPENSSL_CONF=sciezka/do/openssl/libs/openssl-0.9.8k/openssl.cnf`
+
+
+#Aby uruchomić należy:
+Pobrać repozytorium, w konsoli wpisać:
+
+`clone https://github.com/kornel45/crypto_project`
+
+Przejść do folderu:
+
+`cd crypto_project-master`
+
+Wykonać powyższe instrukcje związane z generowaniem kluczy oraz włączyć serwer:
+
+`python server.py`
+
+Na komputerach osób głosujących (bądź też na tym samym komputerze, na którym został odpalony serwer)
+
+`python client.py`
+
+Aby wszystko działało jak należy, powinno być 3 klientów. Każdy z nich powinien otrzymać certyfikat
+od serwera. Dodatkowo, klienci powinni wysłać na serwer swoje certyfikaty.
