@@ -32,10 +32,10 @@ W przypadku problemów związanych z openssl możliwa będzie potrzeba ustawieni
 `set OPENSSL_CONF=sciezka/do/openssl/libs/openssl-0.9.8k/openssl.cnf`
 
 
-#Aby uruchomić należy:
+# Aby uruchomić należy:
 Pobrać repozytorium, w konsoli wpisać:
 
-`clone https://github.com/kornel45/crypto_project`
+`git clone https://github.com/kornel45/crypto_project`
 
 Przejść do folderu:
 
