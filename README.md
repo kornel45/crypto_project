@@ -33,11 +33,11 @@ W przypadku problemów związanych z openssl możliwa będzie potrzeba ustawieni
 
 
 # Aby uruchomić należy:
-Pobrać repozytorium, w konsoli wpisać:
+Pobrać repozytorium. Aby to zrobić należy wpisać w konsoli wpisać:
 
 `git clone https://github.com/kornel45/crypto_project`
 
-Przejść do folderu:
+Przejść do folderu z plikami:
 
 `cd crypto_project-master`
 
