@@ -83,7 +83,7 @@ itsdangerous==1.1.0
 javaobj-py3==0.2.4
 jdcal==1.4
 jedi==0.13.1
-Jinja2==2.10
+Jinja2==2.11.3
 jsonschema==2.6.0
 jupyter==1.0.0
 jupyter-client==5.2.3
