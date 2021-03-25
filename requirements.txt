@@ -184,7 +184,7 @@ pytz==2018.7
 pywin32==223
 pywin32-ctypes==0.2.0
 pywinpty==0.5.4
-PyYAML==3.13
+PyYAML==5.4
 pyzmq==17.0.0
 QtAwesome==0.5.3
 qtconsole==4.4.2
