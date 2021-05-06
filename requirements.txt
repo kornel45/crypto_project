@@ -210,7 +210,7 @@ spyder==3.3.2
 spyder-kernels==0.3.0
 SQLAlchemy==1.2.11
 statsmodels==0.9.0
-svglib==0.8.1
+svglib==0.9.4
 svgutils==0.3.1
 svm==0.1.0
 sympy==1.3
