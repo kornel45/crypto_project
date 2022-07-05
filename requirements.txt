@@ -153,7 +153,7 @@ pyasn1==0.4.4
 pyasn1-modules==0.2.2
 PyAutoGUI==0.9.42
 pycairo==1.17.1
-pycares==2.3.0
+pycares==4.2.0
 pycodestyle==2.4.0
 pycosat==0.6.3
 pycparser==2.19
