@@ -103,7 +103,7 @@ llvmlite==0.24.0
 locket==0.2.0
 lxml==4.1.1
 macholib==1.11
-Mako==1.0.7
+Mako==1.2.2
 Markdown==3.0.1
 MarkupSafe==1.0
 matplotlib==2.2.2
